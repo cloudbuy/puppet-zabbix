@@ -21,6 +21,9 @@ class zabbix::params {
       $manage_repo           = true
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'zabbix-agent'
+      $zabbix_file_mode      = '0644'
+      $zabbix_file_owner     = 'zabbix'
+      $zabbix_file_group     = 'zabbix'
     }
     'Archlinux': {
       $server_fpinglocation  = '/usr/bin/fping'
@@ -30,6 +33,9 @@ class zabbix::params {
       $manage_repo = false
       $zabbix_package_agent  = 'zabbix3-agent'
       $zabbix_service_agent  = 'zabbix-agent'
+      $zabbix_file_mode      = '0644'
+      $zabbix_file_owner     = 'zabbix'
+      $zabbix_file_group     = 'zabbix'
     }
     'Windows': {
       $server_fpinglocation  = '/usr/bin/fping'
@@ -39,6 +45,9 @@ class zabbix::params {
       $manage_repo = false
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'Zabbix Agent'
+      $zabbix_file_mode      = '0664'
+      $zabbix_file_owner     = 'BUILTIN\Administrators'
+      $zabbix_file_group     = 'SYSTEM'
     }
     default  : {
       $server_fpinglocation  = '/usr/sbin/fping'
@@ -48,6 +57,9 @@ class zabbix::params {
       $manage_repo           = true
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'zabbix-agent'
+      $zabbix_file_mode      = '0644'
+      $zabbix_file_owner     = 'zabbix'
+      $zabbix_file_group     = 'zabbix'
     }
   }
 

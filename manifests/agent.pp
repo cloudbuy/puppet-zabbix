@@ -326,9 +326,9 @@ class zabbix::agent (
   # Configuring the zabbix-agent configuration file
   file { $agent_configfile_path:
     ensure  => present,
-    owner   => 'zabbix',
-    group   => 'zabbix',
-    mode    => '0644',
+    owner   => $zabbix::params::zabbix_file_owner,
+    group   => $zabbix::params::zabbix_file_group,
+    mode    => $zabbix::params::zabbix_file_mode,
     notify  => Service[$zabbix_service_agent],
     require => Package[$zabbix_package_agent],
     replace => true,
@@ -338,8 +338,8 @@ class zabbix::agent (
   # Include dir for specific zabbix-agent checks.
   file { $include_dir:
     ensure  => directory,
-    owner   => 'zabbix',
-    group   => 'zabbix',
+    owner   => $zabbix::params::zabbix_file_owner,
+    group   => $zabbix::params::zabbix_file_group,
     recurse => true,
     purge   => $include_dir_purge,
     notify  => Service[$zabbix_service_agent],
