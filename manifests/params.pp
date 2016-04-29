@@ -45,7 +45,7 @@ class zabbix::params {
       $manage_repo = false
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'Zabbix Agent'
-      $zabbix_file_mode      = '0664'
+      $zabbix_file_mode      = '0674'
       $zabbix_file_owner     = 'BUILTIN\Administrators'
       $zabbix_file_group     = 'SYSTEM'
     }
