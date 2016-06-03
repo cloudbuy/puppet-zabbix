@@ -204,6 +204,7 @@ class zabbix::agent (
   $zabbix_version        = $zabbix::params::zabbix_version,
   $zabbix_package_state  = $zabbix::params::zabbix_package_state,
   $zabbix_package_agent  = $zabbix::params::zabbix_package_agent,
+  $zabbix_service_agent  = $zabbix::params::zabbix_service_agent,
   $manage_firewall       = $zabbix::params::manage_firewall,
   $manage_repo           = $zabbix::params::manage_repo,
   $manage_resources      = $zabbix::params::manage_resources,
@@ -314,7 +315,7 @@ class zabbix::agent (
   }
 
   # Controlling the 'zabbix-agent' service
-  service { 'zabbix-agent':
+  service { $zabbix_service_agent:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
@@ -325,10 +326,10 @@ class zabbix::agent (
   # Configuring the zabbix-agent configuration file
   file { $agent_configfile_path:
     ensure  => present,
-    owner   => 'zabbix',
-    group   => 'zabbix',
-    mode    => '0644',
-    notify  => Service['zabbix-agent'],
+    owner   => $zabbix::params::zabbix_file_owner,
+    group   => $zabbix::params::zabbix_file_group,
+    mode    => $zabbix::params::zabbix_file_mode,
+    notify  => Service[$zabbix_service_agent],
     require => Package[$zabbix_package_agent],
     replace => true,
     content => template('zabbix/zabbix_agentd.conf.erb'),
@@ -337,11 +338,11 @@ class zabbix::agent (
   # Include dir for specific zabbix-agent checks.
   file { $include_dir:
     ensure  => directory,
-    owner   => 'zabbix',
-    group   => 'zabbix',
+    owner   => $zabbix::params::zabbix_file_owner,
+    group   => $zabbix::params::zabbix_file_group,
     recurse => true,
     purge   => $include_dir_purge,
-    notify  => Service['zabbix-agent'],
+    notify  => Service[$zabbix_service_agent],
     require => File[$agent_configfile_path],
   }
 
