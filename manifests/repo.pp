@@ -95,7 +95,7 @@ class zabbix::repo (
           $operatingsystem = downcase($::operatingsystem)
 
           if ($::operatingsystem == 'Ubuntu') and ($::lsbdistcodename != 'trusty') {
-            $releasename = $::lsbdistcodename = 'trusty'
+            $releasename = 'trusty'
           }
 
           apt::source { 'zabbix':
