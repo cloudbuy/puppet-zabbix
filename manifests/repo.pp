@@ -94,6 +94,10 @@ class zabbix::repo (
         } else {
           $operatingsystem = downcase($::operatingsystem)
 
+          if ($::operatingsystem == 'Ubuntu') and ($::lsbdistcodename != 'trusty') {
+            $releasename = $::lsbdistcodename = 'trusty'
+          }
+
           apt::source { 'zabbix':
             location => "http://repo.zabbix.com/zabbix/${zabbix_version}/${operatingsystem}/",
             repos    => 'main',
