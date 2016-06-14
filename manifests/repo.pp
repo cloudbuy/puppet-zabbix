@@ -52,7 +52,7 @@ class zabbix::repo (
 
     case $::operatingsystemrelease {
       /\/sid$/ : { $releasename = regsubst($::operatingsystemrelease, '/sid$', '') }
-      16.04    : { $releasename = 'trusty' }
+      '16.04'  : { $releasename = 'trusty' }
       default  : { $releasename = $::lsbdistcodename }
     }
 
