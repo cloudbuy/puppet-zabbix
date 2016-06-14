@@ -52,6 +52,7 @@ class zabbix::repo (
 
     case $::operatingsystemrelease {
       /\/sid$/ : { $releasename = regsubst($::operatingsystemrelease, '/sid$', '') }
+      16.04    : { $releasename = 'trusty' }
       default  : { $releasename = $::lsbdistcodename }
     }
 
@@ -93,10 +94,6 @@ class zabbix::repo (
           }
         } else {
           $operatingsystem = downcase($::operatingsystem)
-
-          if ($::operatingsystem == 'Ubuntu') and ($::lsbdistcodename != 'trusty') {
-            $releasename = 'trusty'
-          }
 
           apt::source { 'zabbix':
             location => "http://repo.zabbix.com/zabbix/${zabbix_version}/${operatingsystem}/",
