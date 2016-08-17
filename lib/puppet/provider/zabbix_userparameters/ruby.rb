@@ -1,7 +1,8 @@
-# encoding: utf-8
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'zabbix'))
 Puppet::Type.type(:zabbix_userparameters).provide(:ruby, parent: Puppet::Provider::Zabbix) do
   def create
+    zabbix_url = @resource[:zabbix_url]
+
     self.class.require_zabbix if zabbix_url != ''
 
     host = @resource[:hostname]

@@ -265,9 +265,8 @@ class zabbix::agent (
   # can find the ipaddress of this specific interface if listenip
   # is set to for example "eth1" or "bond0.73".
   if ($listenip != undef) {
-    if ($listenip =~ /^(eth|bond|lxc|eno|tap|tun).*/) {
-      $int_name  = "ipaddress_${listenip}"
-      $listen_ip = inline_template('<%= scope.lookupvar(int_name) %>')
+    if ($listenip =~ /^(eth|lo|bond|lxc|eno|tap|tun).*/) {
+      $listen_ip = getvar("::ipaddress_${listenip}")
     } elsif is_ip_address($listenip) or $listenip == '*' {
       $listen_ip = $listenip
     } else {
@@ -312,6 +311,19 @@ class zabbix::agent (
   package { $zabbix_package_agent:
     ensure  => $zabbix_package_state,
     require => Class['zabbix::repo'],
+    tag     => 'zabbix',
+  }
+
+  # Ensure that the correct config file is used.
+  zabbix::startup {'zabbix-agent':
+    require => Package[$zabbix_package_agent],
+  }
+
+  if $agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf' {
+    file { '/etc/zabbix/zabbix_agentd.conf':
+      ensure  => absent,
+      require => Package[$zabbix_package_agent],
+    }
   }
 
   # Controlling the 'zabbix-agent' service

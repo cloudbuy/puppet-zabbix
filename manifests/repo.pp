@@ -50,12 +50,6 @@ class zabbix::repo (
       }
     }
 
-    case $::operatingsystemrelease {
-      /\/sid$/ : { $releasename = regsubst($::operatingsystemrelease, '/sid$', '') }
-      '16.04'  : { $releasename = 'trusty' }
-      default  : { $releasename = $::lsbdistcodename }
-    }
-
     case $::osfamily {
       'RedHat' : {
         yumrepo { 'zabbix':
@@ -78,6 +72,7 @@ class zabbix::repo (
 
       }
       'Debian' : {
+        include ::apt
         if ($::architecture == 'armv6l') {
           apt::source { 'zabbix':
             location => 'http://naizvoru.com/raspbian/zabbix',
@@ -94,7 +89,10 @@ class zabbix::repo (
           }
         } else {
           $operatingsystem = downcase($::operatingsystem)
-
+          case $::operatingsystemrelease {
+            /\/sid$/ : { $releasename = regsubst($::operatingsystemrelease, '/sid$', '') }
+            default  : { $releasename = $::lsbdistcodename }
+          }
           apt::source { 'zabbix':
             location => "http://repo.zabbix.com/zabbix/${zabbix_version}/${operatingsystem}/",
             repos    => 'main',
@@ -106,6 +104,8 @@ class zabbix::repo (
             ,
           }
         }
+        Apt::Source['zabbix'] -> Package<|tag == 'zabbix'|>
+        Class['Apt::Update']  -> Package<|tag == 'zabbix'|>
       }
       default  : {
         fail('Unrecognized operating system for webserver')
