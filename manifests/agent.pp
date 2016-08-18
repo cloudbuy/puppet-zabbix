@@ -319,7 +319,7 @@ class zabbix::agent (
     require => Package[$zabbix_package_agent],
   }
 
-  if $agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf' {
+  if ($agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf') and ($::kernel != 'windows') {
     file { '/etc/zabbix/zabbix_agentd.conf':
       ensure  => absent,
       require => Package[$zabbix_package_agent],
