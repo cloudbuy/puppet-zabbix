@@ -155,6 +155,9 @@
 # [*historycachesize*]
 #   Size of history cache, in bytes.
 #
+# [*historyindexcachesize*]
+#   Size of history index cache, in bytes.
+#
 # [*trendcachesize*]
 #   Size of trend cache, in bytes.
 #
@@ -331,6 +334,7 @@ class zabbix::server (
   $cacheupdatefrequency    = $zabbix::params::server_cacheupdatefrequency,
   $startdbsyncers          = $zabbix::params::server_startdbsyncers,
   $historycachesize        = $zabbix::params::server_historycachesize,
+  $historyindexcachesize   = $zabbix::params::server_historyindexcachesize,
   $trendcachesize          = $zabbix::params::server_trendcachesize,
   $historytextcachesize    = $zabbix::params::server_historytextcachesize,
   $valuecachesize          = $zabbix::params::server_valuecachesize,
@@ -421,6 +425,19 @@ class zabbix::server (
   package { "zabbix-server-${db}":
     ensure  => $zabbix_package_state,
     require => Class['zabbix::repo'],
+    tag     => 'zabbix',
+  }
+
+  # Ensure that the correct config file is used.
+  zabbix::startup {'zabbix-server':
+    require => Package["zabbix-server-${db}"],
+  }
+
+  if $server_configfile_path != '/etc/zabbix/zabbix_server.conf' {
+    file { '/etc/zabbix/zabbix_server.conf':
+      ensure  => absent,
+      require => Package["zabbix-server-${db}"],
+    }
   }
 
   # Workaround for: The redhat provider can not handle attribute enable
@@ -507,7 +524,7 @@ class zabbix::server (
   }
 
   # check if selinux is active and allow zabbix
-  if $::selinux_config_mode == 'enforcing' {
+  if $::osfamily == 'RedHat' and $::selinux_config_mode == 'enforcing' {
     selboolean{'zabbix_can_network':
       persistent => true,
       value      => 'on',

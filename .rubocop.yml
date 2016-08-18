@@ -1,12 +1,13 @@
+require: rubocop-rspec
 AllCops:
+  TargetRubyVersion: 1.9
+  Include:
+    - ./**/*.rb
   Exclude:
-    # Ignore HTML related things
-    - '**/*.erb'
-    # Ignore vendored gems
-    - 'vendor/**/*'
-    # Ignore code from test fixtures
-    - 'spec/fixtures/**/*'
-
+    - vendor/**/*
+    - .vendor/**/*
+    - pkg/**/*
+    - spec/fixtures/**/*
 Lint/ConditionPosition:
   Enabled: true
 
@@ -55,8 +56,12 @@ Style/AndOr:
 Style/RedundantSelf:
   Enabled: true
 
-# DISABLED - not useful
+# Method length is not necessarily an indicator of code quality
 Metrics/MethodLength:
+  Enabled: false
+
+# Module length is not necessarily an indicator of code quality
+Metrics/ModuleLength:
   Enabled: false
 
 Style/WhileUntilModifier:
@@ -150,11 +155,12 @@ Style/ClassAndModuleCamelCase:
   Enabled: true
 
 Style/ClassAndModuleChildren:
-  Enabled: true
+  Enabled: false
 
 Style/ClassCheck:
   Enabled: true
 
+# Class length is not necessarily an indicator of code quality
 Metrics/ClassLength:
   Enabled: false
 
@@ -239,6 +245,7 @@ Style/ColonMethodCall:
 Style/CommentAnnotation:
   Enabled: true
 
+# 'Complexity' is very relative
 Metrics/CyclomaticComplexity:
   Enabled: false
 
@@ -246,16 +253,16 @@ Style/ConstantName:
   Enabled: true
 
 Style/Documentation:
-  Enabled: true
+  Enabled: false
 
 Style/DefWithParentheses:
   Enabled: true
 
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Enabled: true
 
 Style/DotPosition:
-  Enabled: true
+  EnforcedStyle: trailing
 
 Style/DoubleNegation:
   Enabled: true
@@ -287,6 +294,7 @@ Style/EmptyLinesAroundAccessModifier:
 Style/EmptyLiteral:
   Enabled: true
 
+# Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Enabled: false
 
@@ -437,8 +445,10 @@ Style/RedundantBegin:
 Style/RescueModifier:
   Enabled: true
 
+# based on https://github.com/voxpupuli/modulesync_config/issues/168
 Style/RegexpLiteral:
-  Enabled: false
+  EnforcedStyle: percent_r
+  Enabled: true
 
 Lint/UnderscorePrefixedVariableName:
   Enabled: true
@@ -470,13 +480,26 @@ Style/BlockDelimiters:
 Style/MultilineBlockLayout:
   Enabled: true
 
-# These cops are enabled by default, they have been disabled to get started with Rubocop
-# They should be re-evaluated soonish - rnelson0, 2/1/2016
+# 'Complexity' is very relative
 Metrics/AbcSize:
   Enabled: False
 
+# 'Complexity' is very relative
 Metrics/PerceivedComplexity:
   Enabled: False
 
 Lint/UselessAssignment:
   Enabled: true
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
+# RSpec
+
+# We don't use rspec in this way
+RSpec/DescribeClass:
+  Enabled: False
+
+# Example length is not necessarily an indicator of code quality
+RSpec/ExampleLength:
+  Enabled: False
