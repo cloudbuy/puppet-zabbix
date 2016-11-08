@@ -316,7 +316,9 @@ class zabbix::agent (
 
   # Ensure that the correct config file is used.
   zabbix::startup {'zabbix-agent':
-    require => Package[$zabbix_package_agent],
+    pidfile               => $pidfile,
+    agent_configfile_path => $agent_configfile_path,
+    require               => Package[$zabbix_package_agent],
   }
 
   if ($agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf') and ($::kernel != 'windows') {
@@ -327,9 +329,15 @@ class zabbix::agent (
   }
 
   # Controlling the 'zabbix-agent' service
-  service { $zabbix_service_agent:
+  if str2bool(getvar('::systemd')) {
+    $service_provider = 'systemd'
+  } else {
+    $service_provider = undef
+  }
+  service { 'zabbix-agent':
     ensure     => running,
     enable     => true,
+    provider   => $service_provider,
     hasstatus  => true,
     hasrestart => true,
     require    => Package[$zabbix_package_agent],

@@ -1,3 +1,47 @@
+## 2016-11-04 Release 2.6.0
+
+  * Maintenance: modulesync with Vox Pupuli defaults (#303, #308)
+  * Maintenance: Improvide rspec testing (#299, #302, #304)
+  * Fix: use getvar to get systemd fact (#305)
+  * Fix: Ensure to use correct upstream gpg key for repo setup (#300)
+  * Feature: Allow to configure Owner/Group of webconfig file (#307)
+
+
+## 2016-10-13 Release 2.5.1
+
+  * Maintenance: modulesync with voxpupuli defaults
+  * Fix: Workaround for already existing DB dumps
+  * Fix: Correctly handle php packages on Ubuntu 16.04
+  * Fix: Don't write Zabbix3.2 options into older setups
+  * Fix: Create working init script on RHEL6
+
+## 2016-09-19 Release 2.5.0
+
+  * Maintenance: modulesync with voxpupuli defaults
+  * Maintenance: Improved test coverage
+  * Fix: Implement zabbix::startup with proper params (fixes broken init scripts)
+  * Fix: Use correct provider for service on Debian
+  * Feature: Add Fedora 24 support
+
+
+## 2016-08-18 Release 2.4.0
+
+  * Maintenance: modulesync with voxpupuli defaults
+  * Fix: add concat as a dep to metadata,json
+  * Fix: Add package tagging for apt update workflow
+  * Fix: add historyindexcachesize option to server and proxy code
+  * Fix: manage database parameter not pass to zabbix::server
+  * Fix: Incorrect selection of systemd in certain OS
+  * Feature: Manage default_vhost in zabbix main class
+  * Feature: Allow setting ListenIP as "lo" loopback interface
+  * Feature: Set selboolean for zabbix proxy
+  * Feature: Support Custom config file name/path
+  * Feature: Respect user provided Zabbix agent package name in userparameters
+  * Feature: Add manage_service option
+
+
+
+
 ## 2016-05-2 Release 2.3.2
 
   * Maintenance: modulesync with voxpupuli defaults

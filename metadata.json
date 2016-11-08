@@ -1,8 +1,8 @@
 {
   "name": "puppet-zabbix",
-  "version": "2.3.3-rc0",
+  "version": "2.6.1-rc0",
   "summary": "Installing and maintaining Zabbix. Will install server, proxy, java-gateway and agent on RedHat/Debian/Ubuntu (Incl. exported resources).",
-  "author": "Voxpupuli",
+  "author": "Vox Pupuli",
   "dependencies": [
     {
       "name": "puppetlabs/postgresql",
@@ -148,6 +148,12 @@
       "operatingsystem": "PCS",
       "operatingsystemrelease": [
         "6.0"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "24"
       ]
     },
     {

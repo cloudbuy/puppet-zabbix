@@ -20,6 +20,7 @@ class zabbix::params {
       $proxy_fping6location  = '/usr/bin/fping6'
       $manage_repo           = true
       $zabbix_package_agent  = 'zabbix-agent'
+      $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $zabbix_service_agent  = 'zabbix-agent'
       $zabbix_file_mode      = '0644'
       $zabbix_file_owner     = 'zabbix'
@@ -30,8 +31,9 @@ class zabbix::params {
       $server_fping6location = '/usr/bin/fping6'
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
-      $manage_repo = false
+      $manage_repo           = false
       $zabbix_package_agent  = 'zabbix3-agent'
+      $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $zabbix_service_agent  = 'zabbix-agent'
       $zabbix_file_mode      = '0644'
       $zabbix_file_owner     = 'zabbix'
@@ -49,6 +51,15 @@ class zabbix::params {
       $zabbix_file_owner     = 'BUILTIN\Administrators'
       $zabbix_file_group     = 'SYSTEM'
     }
+    'Fedora': {
+      $server_fpinglocation  = '/usr/sbin/fping'
+      $server_fping6location = '/usr/sbin/fping6'
+      $proxy_fpinglocation   = '/usr/sbin/fping'
+      $proxy_fping6location  = '/usr/sbin/fping6'
+      $manage_repo           = false
+      $zabbix_package_agent  = 'zabbix-agent'
+      $agent_configfile_path = '/etc/zabbix_agentd.conf'
+    }
     default  : {
       $server_fpinglocation  = '/usr/sbin/fping'
       $server_fping6location = '/usr/sbin/fping6'
@@ -56,6 +67,7 @@ class zabbix::params {
       $proxy_fping6location  = '/usr/sbin/fping6'
       $manage_repo           = true
       $zabbix_package_agent  = 'zabbix-agent'
+      $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $zabbix_service_agent  = 'zabbix-agent'
       $zabbix_file_mode      = '0644'
       $zabbix_file_owner     = 'zabbix'
@@ -76,6 +88,7 @@ class zabbix::params {
   $zabbix_web                               = 'localhost'
   $zabbix_web_ip                            = '127.0.0.1'
   $manage_database                          = true
+  $manage_service                           = true
   $default_vhost                            = false
   $manage_firewall                          = false
   $repo_location                            = ''
@@ -333,6 +346,34 @@ class zabbix::params {
       $puppetgem = 'puppet_gem'
     } else {
       $puppetgem = 'gem'
+    }
+  }
+
+  $_web_config_owner = getvar('::apache::user')
+  if $_web_config_owner != '' {
+    $web_config_owner = $_web_config_owner
+  } else {
+    case $::operatingsystem {
+      'ubuntu', 'debian': {
+        $web_config_owner = 'www-data'
+      }
+      default: {
+        $web_config_owner = 'apache'
+      }
+    }
+  }
+
+  $_web_config_group = getvar('::apache::group')
+  if $_web_config_group != '' {
+    $web_config_group = getvar('::apache::group')
+  } else {
+    case $::operatingsystem {
+      'ubuntu', 'debian': {
+        $web_config_group = 'www-data'
+      }
+      default: {
+        $web_config_group = 'apache'
+      }
     }
   }
 }

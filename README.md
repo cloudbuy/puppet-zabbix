@@ -312,7 +312,7 @@ With the 'zabbix::template' define, you can install Zabbix templates via the API
 
 Please be aware that you can only make use of this feature when you have configured the module to make use of exported resources.
 
-You can instal the MySQL template xml via the next example:
+You can install the MySQL template xml via the next example:
 ```ruby
 zabbix::template { 'Template App MySQL':
   templ_source => 'puppet:///modules/zabbix/MySQL.xml'
@@ -350,6 +350,8 @@ This is the class for installing everything on a single host and thus all parame
 * `zabbix_api_user`: Username of user in Zabbix which is able to create hosts and edit hosts via the zabbix-api. Default: Admin
 * `zabbix_api_pass`: Password for the user in Zabbix for zabbix-api usage. Default: zabbix
 * `zabbix_template_dir`: The directory where all templates are stored before uploading via API
+* `web_config_owner`: Which user should own the web interface configuration file.
+* `web_config_group`: Which group should own the web interface configuration file.
 * `ldap_cacert`: The location of the CA Cert to be used for Zabbix LDAP authentication. The module will not install this file so it must be present on the system.
 * `ldap_clientcrt`: The location of the Client Cert to be used for Zabbix LDAP authentication. The module will not install this file so it must be present on the system.
 * `ldap_clientkey`: The location of the Client Key to be used for Zabbix LDAP authentication. The module will not install this file so it must be present on the system.
