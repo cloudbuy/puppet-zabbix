@@ -334,7 +334,7 @@ class zabbix::agent (
   } else {
     $service_provider = undef
   }
-  service { 'zabbix-agent':
+  service { $zabbix_service_agent:
     ensure     => running,
     enable     => true,
     provider   => $service_provider,
