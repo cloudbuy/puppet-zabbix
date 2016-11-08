@@ -204,7 +204,6 @@ class zabbix::params {
   $agent_zabbix_user                        = undef
   $agent_buffersend                         = '5'
   $agent_buffersize                         = '100'
-  $agent_configfile_path                    = '/etc/zabbix/zabbix_agentd.conf'
   $agent_debuglevel                         = '3'
   $agent_enableremotecommands               = '0'
   $agent_hostmetadata                       = undef
