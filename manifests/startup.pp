@@ -57,7 +57,7 @@ define zabbix::startup (
       mode    => '0755',
       content => template("zabbix/${name}-${osfamily_downcase}.init.erb"),
     }
-  } else {
+  } elsif $::osfamily != 'Windows' {
     fail('We currently only support Debian and RedHat osfamily as non-systemd')
   }
 }
