@@ -199,7 +199,7 @@ Timeout=<%= @timeout %>
 #
 AllowRoot=<%= @allowroot %>
 <% end %>
-<% if @zabbix_version.to_f >= 2.4 %>
+<% if @zabbix_version.to_f >= 2.4 and $kernel != 'windows' %>
 ### Option: User
 #	Drop privileges to a specific, existing user on the system.
 #	Only has effect if run as 'root' and AllowRoot is disabled.
