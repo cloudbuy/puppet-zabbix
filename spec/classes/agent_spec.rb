@@ -31,12 +31,7 @@ describe 'zabbix::agent' do
       end
 
       context 'with all defaults' do
-        package = case facts[:osfamily]
-                  when 'Archlinux'
-                    'zabbix3-agent'
-                  else
-                    'zabbix-agent'
-                  end
+        package = 'zabbix-agent'
         # Make sure package will be installed, service running and ensure of directory.
         it do
           is_expected.to contain_package(package).with(
@@ -74,11 +69,11 @@ describe 'zabbix::agent' do
           it { is_expected.to raise_error(Puppet::Error, %r{Managing a repo on Archlinux is currently not implemented}) }
         when 'Debian'
           # rubocop:disable RSpec/RepeatedExample
-          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version('3.0') }
+          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version('3.4') }
           it { is_expected.to contain_package('zabbix-agent').with_require('Class[Zabbix::Repo]') }
           it { is_expected.to contain_apt__source('zabbix') }
         when 'RedHat'
-          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version('3.0') }
+          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version('3.4') }
           it { is_expected.to contain_package('zabbix-agent').with_require('Class[Zabbix::Repo]') }
           it { is_expected.to contain_yumrepo('zabbix-nonsupported') }
           it { is_expected.to contain_yumrepo('zabbix') }
@@ -148,6 +143,28 @@ describe 'zabbix::agent' do
           it { is_expected.not_to contain_file('/etc/systemd/system/zabbix-agent.service') }
         end
       end
+
+      context 'when declaring zabbix_alias' do
+        let :params do
+          {
+            zabbix_alias: %w[testname]
+          }
+        end
+
+        it { is_expected.to contain_file(config_path).with_content %r{^Alias=testname$} }
+      end
+
+      context 'when declaring zabbix_alias as array' do
+        let :params do
+          {
+            zabbix_alias: %w[name1 name2]
+          }
+        end
+
+        it { is_expected.to contain_file(config_path).with_content %r{^Alias=name1$} }
+        it { is_expected.to contain_file(config_path).with_content %r{^Alias=name2$} }
+      end
+
       context 'configuration file with full options' do
         let :params do
           {

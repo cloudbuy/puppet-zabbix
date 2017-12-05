@@ -89,11 +89,10 @@ class zabbix::database::postgresql (
   }
 
   file { '/root/.pgpass':
-    ensure  => present,
-    mode    => '0600',
-    owner   => 'root',
-    group   => 'root',
-    require => Class['postgresql::client'],
+    ensure => present,
+    mode   => '0600',
+    owner  => 'root',
+    group  => 'root',
   }
 
   case $zabbix_type {
@@ -117,8 +116,8 @@ class zabbix::database::postgresql (
           require  => [
             Exec['update_pgpass'],
           ],
-        } ->
-        exec { 'zabbix_server_images.sql':
+        }
+        -> exec { 'zabbix_server_images.sql':
           command  => $zabbix_server_images_sql,
           path     => "/bin:/usr/bin:/usr/local/sbin:/usr/local/bin:${database_path}",
           unless   => 'test -f /etc/zabbix/.images.done',
@@ -126,8 +125,8 @@ class zabbix::database::postgresql (
           require  => [
             Exec['update_pgpass'],
           ],
-        } ->
-        exec { 'zabbix_server_data.sql':
+        }
+        -> exec { 'zabbix_server_data.sql':
           command  => $zabbix_server_data_sql,
           path     => "/bin:/usr/bin:/usr/local/sbin:/usr/local/bin:${database_path}",
           unless   => 'test -f /etc/zabbix/.data.done',
