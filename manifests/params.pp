@@ -19,6 +19,7 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
       $manage_repo           = true
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $zabbix_service_agent  = 'zabbix-agent'
@@ -34,6 +35,7 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
       $manage_repo           = false
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $agent_config_owner    = 'zabbix-agent'
@@ -47,7 +49,8 @@ class zabbix::params {
       $server_fping6location = '/usr/bin/fping6'
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
-      $manage_repo = false
+      $manage_repo           = false
+      $manage_selinux        = false
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'Zabbix Agent'
       $agent_config_owner    = 'BUILTIN\Administrators'
@@ -63,6 +66,7 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/sbin/fping'
       $proxy_fping6location  = '/usr/sbin/fping6'
       $manage_repo           = false
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix_agentd.conf'
       $agent_config_owner    = 'zabbix'
@@ -77,6 +81,7 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/sbin/fping'
       $proxy_fping6location  = '/usr/sbin/fping6'
       $manage_repo           = true
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $agent_config_owner    = 'zabbix'
@@ -354,7 +359,6 @@ class zabbix::params {
   $javagateway_timeout                      = '3'
 
   # SE Linux specific params
-  $manage_selinux                           = $facts['selinux']
   $selinux_require                          = ['type zabbix_agent_t', 'class process setrlimit', 'class unix_dgram_socket create']
   $selinux_rules                            = { 'zabbix_agent_t' => ['allow zabbix_agent_t self:process setrlimit', 'allow zabbix_agent_t self:unix_dgram_socket create']}
 
