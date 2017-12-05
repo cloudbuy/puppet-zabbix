@@ -5,7 +5,7 @@
 
 ############ GENERAL PARAMETERS #################
 
-<% if @pidfile %>
+<% if @pidfile and @kernel != 'windows' %>
 ### Option: PidFile
 #	Name of PID file.
 #
