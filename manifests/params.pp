@@ -12,19 +12,22 @@
 #
 class zabbix::params {
   # It seems that ubuntu has an different fping path...
-  case $::operatingsystem {
-    'ubuntu', 'debian' : {
+  case $facts['os']['name'] {
+    'Ubuntu', 'Debian' : {
       $server_fpinglocation  = '/usr/bin/fping'
       $server_fping6location = '/usr/bin/fping6'
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
       $manage_repo           = true
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
       $zabbix_service_agent  = 'zabbix-agent'
-      $zabbix_file_mode      = '0644'
-      $zabbix_file_owner     = 'zabbix'
-      $zabbix_file_group     = 'zabbix'
+      $agent_config_owner    = 'zabbix'
+      $agent_zabbix_user     = 'zabbix'
+      $agent_config_group    = 'zabbix'
+      $agent_pidfile         = '/var/run/zabbix/zabbix_agentd.pid'
+      $server_zabbix_user    = 'zabbix'
     }
     'Archlinux': {
       $server_fpinglocation  = '/usr/bin/fping'
@@ -32,24 +35,30 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
       $manage_repo           = false
-      $zabbix_package_agent  = 'zabbix3-agent'
+      $manage_selinux        = $facts['selinux']
+      $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
-      $zabbix_service_agent  = 'zabbix-agent'
-      $zabbix_file_mode      = '0644'
-      $zabbix_file_owner     = 'zabbix'
-      $zabbix_file_group     = 'zabbix'
+      $agent_config_owner    = 'zabbix-agent'
+      $agent_zabbix_user     = 'zabbix-agent'
+      $agent_config_group    = 'zabbix-agent'
+      $agent_pidfile         = undef
+      $server_zabbix_user    = 'zabbix-server'
     }
     'Windows': {
       $server_fpinglocation  = '/usr/bin/fping'
       $server_fping6location = '/usr/bin/fping6'
       $proxy_fpinglocation   = '/usr/bin/fping'
       $proxy_fping6location  = '/usr/bin/fping6'
-      $manage_repo = false
+      $manage_repo           = false
+      $manage_selinux        = false
       $zabbix_package_agent  = 'zabbix-agent'
       $zabbix_service_agent  = 'Zabbix Agent'
-      $zabbix_file_mode      = '0674'
-      $zabbix_file_owner     = 'BUILTIN\Administrators'
-      $zabbix_file_group     = 'SYSTEM'
+      $agent_config_owner    = 'BUILTIN\Administrators'
+      $agent_zabbix_user     = 'SYSTEM'
+      $agent_config_group    = 'SYSTEM'
+      $agent_config_mode     = '0674'
+      $agent_pidfile         = false
+      $server_zabbix_user    = 'SYSTEM'
     }
     'Fedora': {
       $server_fpinglocation  = '/usr/sbin/fping'
@@ -57,8 +66,14 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/sbin/fping'
       $proxy_fping6location  = '/usr/sbin/fping6'
       $manage_repo           = false
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix_agentd.conf'
+      $agent_config_owner    = 'zabbix'
+      $agent_zabbix_user     = 'zabbix'
+      $agent_config_group    = 'zabbix'
+      $agent_pidfile         = '/var/run/zabbix/zabbix_agentd.pid'
+      $server_zabbix_user    = 'zabbix'
     }
     default  : {
       $server_fpinglocation  = '/usr/sbin/fping'
@@ -66,12 +81,15 @@ class zabbix::params {
       $proxy_fpinglocation   = '/usr/sbin/fping'
       $proxy_fping6location  = '/usr/sbin/fping6'
       $manage_repo           = true
+      $manage_selinux        = $facts['selinux']
       $zabbix_package_agent  = 'zabbix-agent'
       $agent_configfile_path = '/etc/zabbix/zabbix_agentd.conf'
-      $zabbix_service_agent  = 'zabbix-agent'
-      $zabbix_file_mode      = '0644'
-      $zabbix_file_owner     = 'zabbix'
-      $zabbix_file_group     = 'zabbix'
+      $agent_config_owner    = 'zabbix'
+      $agent_zabbix_user     = 'zabbix'
+      $agent_config_group    = 'zabbix'
+      $agent_pidfile         = '/var/run/zabbix/zabbix_agentd.pid'
+      $server_zabbix_user    = 'zabbix'
+      $agent_config_mode     = '0674'
     }
   }
 
@@ -84,13 +102,14 @@ class zabbix::params {
   $zabbix_template_dir                      = '/etc/zabbix/imported_templates'
   $zabbix_timezone                          = 'Europe/Amsterdam'
   $zabbix_url                               = 'localhost'
-  $zabbix_version                           = '3.0'
+  $zabbix_version                           = '3.4'
   $zabbix_web                               = 'localhost'
   $zabbix_web_ip                            = '127.0.0.1'
   $manage_database                          = true
   $manage_service                           = true
   $default_vhost                            = false
   $manage_firewall                          = false
+  $manage_apt                               = true
   $repo_location                            = ''
   $manage_resources                         = false
   $manage_vhost                             = true
@@ -133,6 +152,7 @@ class zabbix::params {
   $server_database_charset                  = 'utf8'
   $server_database_collate                  = 'utf8_general_ci'
   $server_database_host                     = 'localhost'
+  $server_database_host_ip                  = '127.0.0.1'
   $server_database_name                     = 'zabbix_server'
   $server_database_password                 = 'zabbix_server'
   $server_database_port                     = undef
@@ -201,7 +221,6 @@ class zabbix::params {
 
   # Agent specific params
   $agent_allowroot                          = '0'
-  $agent_zabbix_user                        = undef
   $agent_buffersend                         = '5'
   $agent_buffersize                         = '100'
   $agent_debuglevel                         = '3'
@@ -216,12 +235,8 @@ class zabbix::params {
   $agent_listenport                         = '10050'
   $agent_loadmodule                         = undef
   $agent_loadmodulepath                     = '/usr/lib/modules'
-  $agent_logtype                            = 'file'
-  $agent_logfile                            = '/var/log/zabbix/zabbix_agentd.log'
-  $agent_logfilesize                        = '100'
   $agent_logremotecommands                  = '0'
   $agent_maxlinespersecond                  = '100'
-  $agent_pidfile                            = '/var/run/zabbix/zabbix_agentd.pid'
   $agent_refreshactivechecks                = '120'
   $agent_server                             = '127.0.0.1'
   $agent_serveractive                       = undef
@@ -249,6 +264,16 @@ class zabbix::params {
     'Template App SSH Service']
   $apache_status                            = false
   $monitored_by_proxy                       = undef
+  # provided by camp2camp/systemd
+  if $facts['systemd'] {
+    $agent_logtype                          = 'system'
+    $agent_logfile                          = undef
+    $agent_logfilesize                      = undef
+  } else {
+    $agent_logtype                          = 'file'
+    $agent_logfile                          = '/var/log/zabbix/zabbix_agentd.log'
+    $agent_logfilesize                      = '100'
+  }
 
   # Proxy specific params
   $proxy_allowroot                          = '0'
@@ -333,6 +358,20 @@ class zabbix::params {
   $javagateway_startpollers                 = '5'
   $javagateway_timeout                      = '3'
 
+  # SE Linux specific params
+  $selinux_require                          = ['type zabbix_agent_t', 'class process setrlimit', 'class unix_dgram_socket create']
+  $selinux_rules                            = { 'zabbix_agent_t' => ['allow zabbix_agent_t self:process setrlimit', 'allow zabbix_agent_t self:unix_dgram_socket create']}
+
+  # services should run foreground and as simple type
+  # but this only works in 3.0 and newer
+  # https://www.freedesktop.org/software/systemd/man/systemd.service.html#Type=
+  if versioncmp($zabbix_version, '3.0') < 0 {
+    $additional_service_params = ''
+    $service_type              = 'forking'
+  } else {
+    $additional_service_params = '--foreground'
+    $service_type              = 'simple'
+  }
   # Gem provider may vary based on version/type of puppet install.
   # This can be a little complicated and may need revisited over time.
   if str2bool($::is_pe) {

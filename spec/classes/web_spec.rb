@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 def package_provider_for_gems
-  Puppet.version =~ %r{^4} ? 'puppet_gem' : 'gem'
+  Puppet.version =~ %r{^4|^5} ? 'puppet_gem' : 'gem'
 end
 
 describe 'zabbix::web' do
@@ -14,6 +14,7 @@ describe 'zabbix::web' do
       zabbix_url: 'zabbix.example.com'
     }
   end
+
   on_supported_os.each do |os, facts|
     context "on #{os} " do
       let :facts do
@@ -32,22 +33,18 @@ describe 'zabbix::web' do
 
         describe 'with enforcing selinux' do
           let :facts do
-            super().merge(selinux_config_mode: 'enforcing')
+            super().merge(selinux: true)
           end
-          if facts[:osfamily] == 'RedHat'
-            it { is_expected.to contain_selboolean('httpd_can_connect_zabbix').with('value' => 'on', 'persistent' => true) }
-          else
-            it { is_expected.not_to contain_selboolean('httpd_can_connect_zabbix') }
-          end
+
+          it { is_expected.to contain_selboolean('httpd_can_connect_zabbix').with('value' => 'on', 'persistent' => true) }
         end
 
-        %w(permissive disabled).each do |mode|
-          describe "with #{mode} selinux" do
-            let :facts do
-              super().merge(selinux_config_mode: mode)
-            end
-            it { is_expected.not_to contain_selboolean('httpd_can_connect_zabbix') }
+        describe 'with false selinux' do
+          let :facts do
+            super().merge(selinux: false)
           end
+
+          it { is_expected.not_to contain_selboolean('httpd_can_connect_zabbix') }
         end
 
         describe 'with database_type as postgresql' do
@@ -114,6 +111,7 @@ describe 'zabbix::web' do
           let :params do
             super().merge(web_config_owner: 'apache')
           end
+
           it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_owner('apache') }
         end
 
@@ -121,6 +119,7 @@ describe 'zabbix::web' do
           let :params do
             super().merge(web_config_group: 'apache')
           end
+
           it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_group('apache') }
         end
 

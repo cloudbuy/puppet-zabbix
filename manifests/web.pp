@@ -220,10 +220,11 @@ class zabbix::web (
   $ldap_clientcert                          = $zabbix::params::ldap_clientcert,
   $ldap_clientkey                           = $zabbix::params::ldap_clientkey,
   $puppetgem                                = $zabbix::params::puppetgem,
+  Boolean $manage_selinux                   = $zabbix::params::manage_selinux,
 ) inherits zabbix::params {
 
   # check osfamily, Arch is currently not supported for web
-  if $::osfamily == 'Archlinux' {
+  if $facts['os']['family'] == 'Archlinux' {
     fail('Archlinux is currently not supported for zabbix::web ')
   }
 
@@ -266,7 +267,7 @@ class zabbix::web (
         $zabbixapi_version = '2.4.4'
       }
       default : {
-        $zabbixapi_version = '2.4.7'
+        $zabbixapi_version = '3.2.1'
       }
     }
 
@@ -278,13 +279,13 @@ class zabbix::web (
       owner  => 'zabbix',
       group  => 'zabbix',
       mode   => '0755',
-    } ->
-    package { 'zabbixapi':
+    }
+    -> package { 'zabbixapi':
       ensure   => $zabbixapi_version,
       provider => $puppetgem,
       require  => Class['ruby::dev'],
-    } ->
-    class { '::zabbix::resources::web':
+    }
+    -> class { '::zabbix::resources::web':
       zabbix_url     => $zabbix_url,
       zabbix_user    => $zabbix_api_user,
       zabbix_pass    => $zabbix_api_pass,
@@ -464,7 +465,7 @@ class zabbix::web (
   } # END if $manage_vhost
 
   # check if selinux is active and allow zabbix
-  if $::osfamily == 'RedHat' and getvar('::selinux_config_mode') == 'enforcing' {
+  if $facts['selinux'] == true and $manage_selinux {
     selboolean{'httpd_can_connect_zabbix':
       persistent => true,
       value      => 'on',
