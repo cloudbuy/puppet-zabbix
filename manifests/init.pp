@@ -262,6 +262,7 @@ class zabbix (
     cacheupdatefrequency      => $cacheupdatefrequency,
     startdbsyncers            => $startdbsyncers,
     historycachesize          => $historycachesize,
+    historyindexcachesize     => $historyindexcachesize,
     trendcachesize            => $trendcachesize,
     historytextcachesize      => $historytextcachesize,
     valuecachesize            => $valuecachesize,
