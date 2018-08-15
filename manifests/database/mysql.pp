@@ -4,8 +4,8 @@
 #  and other data which is needed for zabbix.
 #
 #  Please note:
-#  This class will be called from zabbix::database. No need for calling
-#  this class manually.
+#  This class will be called from zabbix::server or zabbix::proxy.
+#  No need for calling this class manually.
 #
 # === Authors
 #
@@ -24,6 +24,9 @@ class zabbix::database::mysql (
   $database_password    = '',
   $database_host        = '',
   $database_path        = $zabbix::params::database_path,) inherits zabbix::params {
+
+  assert_private()
+
   #
   # Adjustments for version 3.0 - structure of package with sqls differs from previous versions
   case $zabbix_version {
@@ -48,7 +51,7 @@ class zabbix::database::mysql (
     }
     default: {
       if ($database_schema_path == false) or ($database_schema_path == '') {
-        case $::osfamily {
+        case $facts['os']['family'] {
           'RedHat': {
             $schema_path   = "/usr/share/doc/zabbix-*-mysql-${zabbix_version}*/create"
           }

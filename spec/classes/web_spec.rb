@@ -138,7 +138,7 @@ describe 'zabbix::web' do
 
         describe 'when manage_resources and is_pe are true' do
           let :facts do
-            super().merge(
+            facts.merge(
               is_pe: true,
               pe_version: '3.7.0'
             )
@@ -168,7 +168,9 @@ describe 'zabbix::web' do
               database_name: 'zabbix-server',
               database_user: 'zabbix-server',
               database_password: 'zabbix-server',
-              zabbix_server: 'localhost'
+              zabbix_server: 'localhost',
+              zabbix_listenport: '3306',
+              zabbix_server_name: 'localhost'
             )
           end
 
@@ -177,6 +179,8 @@ describe 'zabbix::web' do
           it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_content(%r{^\$DB\['USER'\]     = 'zabbix-server'}) }
           it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_content(%r{^\$DB\['PASSWORD'\] = 'zabbix-server'}) }
           it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_content(%r{^\$ZBX_SERVER      = 'localhost'}) }
+          it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_content(%r{^\$ZBX_SERVER_PORT = '3306'}) }
+          it { is_expected.to contain_file('/etc/zabbix/web/zabbix.conf.php').with_content(%r{^\$ZBX_SERVER_NAME = 'localhost'}) }
         end
       end
     end

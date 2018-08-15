@@ -4,8 +4,8 @@
 #  and other data which is needed for zabbix.
 #
 #  Please note:
-#  This class will be called from zabbix::database. No need for calling
-#  this class manually.
+#  This class will be called from zabbix::server or zabbix::proxy.
+#  No need for calling this class manually.
 #
 # === Authors
 #
@@ -25,12 +25,15 @@ class zabbix::database::postgresql (
   $database_host        = '',
   $database_path        = $zabbix::params::database_path,
 ) inherits zabbix::params {
+
+  assert_private()
+
   #
   # Adjustments for version 3.0 - structure of package with sqls differs from previous versions
   case $zabbix_version {
     /^3.\d+$/: {
       if ($database_schema_path == false) or ($database_schema_path == '') {
-        case $::operatingsystem {
+        case $facts['os']['name'] {
           'CentOS', 'RedHat', 'OracleLinux': {
             $schema_path   = "/usr/share/doc/zabbix-*-pgsql-${zabbix_version}*/"
           }
@@ -56,7 +59,7 @@ class zabbix::database::postgresql (
     }
     default: {
       if ($database_schema_path == false) or ($database_schema_path == '') {
-        case $::operatingsystem {
+        case $facts['os']['name'] {
           'CentOS', 'RedHat', 'OracleLinux': {
             $schema_path   = "/usr/share/doc/zabbix-*-pgsql-${zabbix_version}*/create"
           }

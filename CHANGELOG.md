@@ -4,6 +4,113 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.4.0](https://github.com/voxpupuli/puppet-zabbix/tree/v6.4.0) (2018-08-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.3.2...v6.4.0)
+
+**Implemented enhancements:**
+
+- Expose server name in main class, fixes \#510 [\#511](https://github.com/voxpupuli/puppet-zabbix/pull/511) ([lordievader](https://github.com/lordievader))
+
+**Fixed bugs:**
+
+- Exec\[zabbix\_server\_create.sql\] does not work because is might come after Package\[zabbix-server-mysql [\#505](https://github.com/voxpupuli/puppet-zabbix/issues/505)
+- Add missing enable =\> true for zabbix-java-gateway [\#516](https://github.com/voxpupuli/puppet-zabbix/pull/516) ([stefanandres](https://github.com/stefanandres))
+
+**Closed issues:**
+
+- Expose the $zabbix\_server\_name variable [\#510](https://github.com/voxpupuli/puppet-zabbix/issues/510)
+
+**Merged pull requests:**
+
+- get rid of useless topscope calling [\#509](https://github.com/voxpupuli/puppet-zabbix/pull/509) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v6.3.2](https://github.com/voxpupuli/puppet-zabbix/tree/v6.3.2) (2018-06-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.3.1...v6.3.2)
+
+**Fixed bugs:**
+
+- Zabbix Repository \(zabbix-non-supported\) defined with incorrect gpgkey [\#397](https://github.com/voxpupuli/puppet-zabbix/issues/397)
+- Clarify dependency for database handling [\#508](https://github.com/voxpupuli/puppet-zabbix/pull/508) ([stefanandres](https://github.com/stefanandres))
+- Fix missing enable attribut for zabbix::proxy service [\#507](https://github.com/voxpupuli/puppet-zabbix/pull/507) ([stefanandres](https://github.com/stefanandres))
+- Support SSL parameters for web monitoring in all versions \>= 2.4 [\#469](https://github.com/voxpupuli/puppet-zabbix/pull/469) ([anotherfigo](https://github.com/anotherfigo))
+- wait for network connectivity before Zabbix Server startup [\#454](https://github.com/voxpupuli/puppet-zabbix/pull/454) ([tequeter](https://github.com/tequeter))
+
+**Closed issues:**
+
+- Puppet 5.3 Zabbix 2.4 json conflict [\#502](https://github.com/voxpupuli/puppet-zabbix/issues/502)
+- repeated attempted key import in Ubuntu 18.04 [\#500](https://github.com/voxpupuli/puppet-zabbix/issues/500)
+- SELinux blocks httpd from accessing database [\#477](https://github.com/voxpupuli/puppet-zabbix/issues/477)
+
+**Merged pull requests:**
+
+- drop EOL OSs; fix puppet version range [\#501](https://github.com/voxpupuli/puppet-zabbix/pull/501) ([bastelfreak](https://github.com/bastelfreak))
+- Rely on beaker-hostgenerator for docker nodesets [\#498](https://github.com/voxpupuli/puppet-zabbix/pull/498) ([ekohl](https://github.com/ekohl))
+
+## [v6.3.1](https://github.com/voxpupuli/puppet-zabbix/tree/v6.3.1) (2018-03-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.3.0...v6.3.1)
+
+**Fixed bugs:**
+
+- listenip in agent not resolving to IP address from network interface name [\#493](https://github.com/voxpupuli/puppet-zabbix/issues/493)
+- Fix listen\_ip bug and relax interface regex [\#494](https://github.com/voxpupuli/puppet-zabbix/pull/494) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v6.3.0](https://github.com/voxpupuli/puppet-zabbix/tree/v6.3.0) (2018-03-28)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.2.0...v6.3.0)
+
+**Implemented enhancements:**
+
+- zabbix::agent without an IP shouldn't guess the IP [\#473](https://github.com/voxpupuli/puppet-zabbix/issues/473)
+- add ability to manage ZBX\_SERVER\_NAME in web class [\#491](https://github.com/voxpupuli/puppet-zabbix/pull/491) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Do not guess ListenIP, fixes \#473, bump stdlib to 4.19.0 [\#487](https://github.com/voxpupuli/puppet-zabbix/pull/487) ([lordievader](https://github.com/lordievader))
+
+**Merged pull requests:**
+
+- bump puppet version dependency to \>= 4.10.0 \< 6.0.0 [\#490](https://github.com/voxpupuli/puppet-zabbix/pull/490) ([bastelfreak](https://github.com/bastelfreak))
+- allow camptocamp/systemd 2.X [\#486](https://github.com/voxpupuli/puppet-zabbix/pull/486) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v6.2.0](https://github.com/voxpupuli/puppet-zabbix/tree/v6.2.0) (2018-02-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.1.0...v6.2.0)
+
+**Implemented enhancements:**
+
+- add vmwaretimeout as possible server-param [\#482](https://github.com/voxpupuli/puppet-zabbix/pull/482) ([b014651](https://github.com/b014651))
+- \#476 Pass credentials for HTTP auth [\#479](https://github.com/voxpupuli/puppet-zabbix/pull/479) ([tux-o-matic](https://github.com/tux-o-matic))
+
+**Fixed bugs:**
+
+- Dependencies need update [\#453](https://github.com/voxpupuli/puppet-zabbix/issues/453)
+- Fixed versioncmp compare and fixed typo in file zabbix-server-ips.te [\#480](https://github.com/voxpupuli/puppet-zabbix/pull/480) ([Fabian1976](https://github.com/Fabian1976))
+
+**Closed issues:**
+
+- stard "firewalld" [\#478](https://github.com/voxpupuli/puppet-zabbix/issues/478)
+- Support HTTP auth for API calls [\#476](https://github.com/voxpupuli/puppet-zabbix/issues/476)
+
+**Merged pull requests:**
+
+- Update module dependencies [\#485](https://github.com/voxpupuli/puppet-zabbix/pull/485) ([alexjfisher](https://github.com/alexjfisher))
+- Document needed sebooleans for httpd/zabbix-web [\#481](https://github.com/voxpupuli/puppet-zabbix/pull/481) ([Fabian1976](https://github.com/Fabian1976))
+
+## [v6.1.0](https://github.com/voxpupuli/puppet-zabbix/tree/v6.1.0) (2017-12-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v6.0.0...v6.1.0)
+
+**Implemented enhancements:**
+
+- Using $manage\_service in zabbix::proxy [\#374](https://github.com/voxpupuli/puppet-zabbix/pull/374) ([Samgarr](https://github.com/Samgarr))
+
+**Merged pull requests:**
+
+- Update Debian repository public key ID [\#462](https://github.com/voxpupuli/puppet-zabbix/pull/462) ([sigv](https://github.com/sigv))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-zabbix/tree/v6.0.0) (2017-11-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v5.0.1...v6.0.0)
@@ -19,13 +126,10 @@ These should not affect the functionality of the module.
 
 **Closed issues:**
 
+- Incorrect public key for repository [\#461](https://github.com/voxpupuli/puppet-zabbix/issues/461)
 - Allow external script execution with SE Linux [\#441](https://github.com/voxpupuli/puppet-zabbix/issues/441)
 - Using existing mysql database [\#237](https://github.com/voxpupuli/puppet-zabbix/issues/237)
 - Setting Apache alias /zabbix [\#236](https://github.com/voxpupuli/puppet-zabbix/issues/236)
-
-**Merged pull requests:**
-
-- release 5.0.1 [\#456](https://github.com/voxpupuli/puppet-zabbix/pull/456) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v5.0.1](https://github.com/voxpupuli/puppet-zabbix/tree/v5.0.1) (2017-10-21)
 
@@ -81,9 +185,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 4.1.3 [\#421](https://github.com/voxpupuli/puppet-zabbix/pull/421) ([bastelfreak](https://github.com/bastelfreak))
 - bump postgresql to allow 5.X [\#420](https://github.com/voxpupuli/puppet-zabbix/pull/420) ([bastelfreak](https://github.com/bastelfreak))
-- release 4.1.2 [\#416](https://github.com/voxpupuli/puppet-zabbix/pull/416) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.1.2](https://github.com/voxpupuli/puppet-zabbix/tree/v4.1.2) (2017-06-23)
 
@@ -105,11 +207,6 @@ These should not affect the functionality of the module.
 
 - unless $manage\_database interprets False wrong; and useless require breaks standalone database setups [\#409](https://github.com/voxpupuli/puppet-zabbix/pull/409) ([bastelfreak](https://github.com/bastelfreak))
 
-**Merged pull requests:**
-
-- release 4.1.1 [\#410](https://github.com/voxpupuli/puppet-zabbix/pull/410) ([bastelfreak](https://github.com/bastelfreak))
-- release 4.1.0 [\#402](https://github.com/voxpupuli/puppet-zabbix/pull/402) ([bastelfreak](https://github.com/bastelfreak))
-
 ## [v4.1.0](https://github.com/voxpupuli/puppet-zabbix/tree/v4.1.0) (2017-06-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v4.0.0...v4.1.0)
@@ -125,7 +222,6 @@ These should not affect the functionality of the module.
 
 - Zabbix agent should be started forking on 2.X and simple on 3.X [\#404](https://github.com/voxpupuli/puppet-zabbix/issues/404)
 - Fails to upgrade zabbix-agent if zabbix\_version is changed [\#398](https://github.com/voxpupuli/puppet-zabbix/issues/398)
-- Zabbix Repository \(zabbix-non-supported\) defined with incorrect gpgkey [\#397](https://github.com/voxpupuli/puppet-zabbix/issues/397)
 - define owner and group via parameters [\#400](https://github.com/voxpupuli/puppet-zabbix/pull/400) ([kBite](https://github.com/kBite))
 - only add --foreground on 3.0 and newer [\#396](https://github.com/voxpupuli/puppet-zabbix/pull/396) ([bastelfreak](https://github.com/bastelfreak))
 
@@ -136,6 +232,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
+- release 4.1.0 [\#402](https://github.com/voxpupuli/puppet-zabbix/pull/402) ([bastelfreak](https://github.com/bastelfreak))
 - Fix rpm key handling + changing default values depending on zabbix version [\#399](https://github.com/voxpupuli/puppet-zabbix/pull/399) ([bastelfreak](https://github.com/bastelfreak))
 - Provide acceptance tests for zabbix server [\#392](https://github.com/voxpupuli/puppet-zabbix/pull/392) ([bastelfreak](https://github.com/bastelfreak))
 
@@ -183,9 +280,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 3.0.0 [\#354](https://github.com/voxpupuli/puppet-zabbix/pull/354) ([bastelfreak](https://github.com/bastelfreak))
 - Change minimum required Puppet version to 4.6.1.  Puppet 3 is no longer supported. [\#345](https://github.com/voxpupuli/puppet-zabbix/pull/345) ([bastelfreak](https://github.com/bastelfreak))
-- release 2.6.2 [\#343](https://github.com/voxpupuli/puppet-zabbix/pull/343) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.6.2](https://github.com/voxpupuli/puppet-zabbix/tree/v2.6.2) (2017-01-11)
 
@@ -199,7 +294,6 @@ These should not affect the functionality of the module.
 
 - Fix failing test due to missing selinux fact [\#332](https://github.com/voxpupuli/puppet-zabbix/pull/332) ([juniorsysadmin](https://github.com/juniorsysadmin))
 - Bump min version\_requirement for Puppet + deps [\#331](https://github.com/voxpupuli/puppet-zabbix/pull/331) ([juniorsysadmin](https://github.com/juniorsysadmin))
-- release 2.6.1 [\#327](https://github.com/voxpupuli/puppet-zabbix/pull/327) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.6.1](https://github.com/voxpupuli/puppet-zabbix/tree/v2.6.1) (2016-12-07)
 
@@ -227,7 +321,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.6.0 [\#309](https://github.com/voxpupuli/puppet-zabbix/pull/309) ([bastelfreak](https://github.com/bastelfreak))
 - In case we are not using Apache we should have an option to define ow… [\#307](https://github.com/voxpupuli/puppet-zabbix/pull/307) ([admont](https://github.com/admont))
 - use getvar to get systemd fact [\#305](https://github.com/voxpupuli/puppet-zabbix/pull/305) ([bastelfreak](https://github.com/bastelfreak))
 - make rspec more awesome [\#304](https://github.com/voxpupuli/puppet-zabbix/pull/304) ([bastelfreak](https://github.com/bastelfreak))
@@ -247,7 +340,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.5.1 [\#295](https://github.com/voxpupuli/puppet-zabbix/pull/295) ([bastelfreak](https://github.com/bastelfreak))
 - Fixes for \#264 [\#291](https://github.com/voxpupuli/puppet-zabbix/pull/291) ([shaunrampersad](https://github.com/shaunrampersad))
 - Adapt to zabbix-3.2 and higher. [\#289](https://github.com/voxpupuli/puppet-zabbix/pull/289) ([yevtushenko](https://github.com/yevtushenko))
 - Fix for php db package name on Ubuntu 16.04 [\#284](https://github.com/voxpupuli/puppet-zabbix/pull/284) ([frozenfoxx](https://github.com/frozenfoxx))
@@ -299,12 +391,15 @@ These should not affect the functionality of the module.
 - Added package tagging for apt update workflow. [\#234](https://github.com/voxpupuli/puppet-zabbix/pull/234) ([ITler](https://github.com/ITler))
 - Fix Concat pinning [\#232](https://github.com/voxpupuli/puppet-zabbix/pull/232) ([bastelfreak](https://github.com/bastelfreak))
 - Allows setting ListenIP as "lo" loopback interface. [\#229](https://github.com/voxpupuli/puppet-zabbix/pull/229) ([felipe1982](https://github.com/felipe1982))
-- Modulesync + Release 2.3.2 [\#227](https://github.com/voxpupuli/puppet-zabbix/pull/227) ([bastelfreak](https://github.com/bastelfreak))
 - Manage default\_vhost in zabbix main class. [\#226](https://github.com/voxpupuli/puppet-zabbix/pull/226) ([furhouse](https://github.com/furhouse))
 
 ## [v2.3.2](https://github.com/voxpupuli/puppet-zabbix/tree/v2.3.2) (2016-05-21)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zabbix/compare/v2.3.1...v2.3.2)
+
+**Merged pull requests:**
+
+- Modulesync + Release 2.3.2 [\#227](https://github.com/voxpupuli/puppet-zabbix/pull/227) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.3.1](https://github.com/voxpupuli/puppet-zabbix/tree/v2.3.1) (2016-05-20)
 
@@ -340,7 +435,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Prepare release 2.3.0 [\#215](https://github.com/voxpupuli/puppet-zabbix/pull/215) ([bastelfreak](https://github.com/bastelfreak))
 - fix typo in zabbix\_host provider [\#211](https://github.com/voxpupuli/puppet-zabbix/pull/211) ([damoxc](https://github.com/damoxc))
 - Missing zabbix\_url in create [\#209](https://github.com/voxpupuli/puppet-zabbix/pull/209) ([cbergmann](https://github.com/cbergmann))
 - userparameters not working. [\#208](https://github.com/voxpupuli/puppet-zabbix/pull/208) ([cbergmann](https://github.com/cbergmann))
@@ -351,11 +445,7 @@ These should not affect the functionality of the module.
 - Add archlinux support [\#201](https://github.com/voxpupuli/puppet-zabbix/pull/201) ([bastelfreak](https://github.com/bastelfreak))
 - there is no zabbix proxy package in zbx-3.0 [\#198](https://github.com/voxpupuli/puppet-zabbix/pull/198) ([BcTpe4HbIu](https://github.com/BcTpe4HbIu))
 - Zabbix as default vhost \#180 [\#197](https://github.com/voxpupuli/puppet-zabbix/pull/197) ([szemlyanoy](https://github.com/szemlyanoy))
-- Add Zabbix sender support [\#195](https://github.com/voxpupuli/puppet-zabbix/pull/195) ([vide](https://github.com/vide))
-- fix wrong comment for configfrequency [\#192](https://github.com/voxpupuli/puppet-zabbix/pull/192) ([BcTpe4HbIu](https://github.com/BcTpe4HbIu))
 - Feature selinux [\#191](https://github.com/voxpupuli/puppet-zabbix/pull/191) ([bastelfreak](https://github.com/bastelfreak))
-- Fix for proxy sqlite support [\#189](https://github.com/voxpupuli/puppet-zabbix/pull/189) ([BcTpe4HbIu](https://github.com/BcTpe4HbIu))
-- updated to include Amazon Linux [\#188](https://github.com/voxpupuli/puppet-zabbix/pull/188) ([ericsysmin](https://github.com/ericsysmin))
 
 ## [2.2.0](https://github.com/voxpupuli/puppet-zabbix/tree/2.2.0) (2016-03-06)
 
@@ -440,8 +530,8 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - Type to manage zabbix application [\#155](https://github.com/voxpupuli/puppet-zabbix/pull/155) ([hkumarmk](https://github.com/hkumarmk))
-- Fixed previous error in merge [\#152](https://github.com/voxpupuli/puppet-zabbix/pull/152) ([elricsfate](https://github.com/elricsfate))
-- Added support for adding LDAP certificate location to Zabbix Web. Upd… [\#150](https://github.com/voxpupuli/puppet-zabbix/pull/150) ([elricsfate](https://github.com/elricsfate))
+- Fixed previous error in merge [\#152](https://github.com/voxpupuli/puppet-zabbix/pull/152) ([rtizzy](https://github.com/rtizzy))
+- Added support for adding LDAP certificate location to Zabbix Web. Upd… [\#150](https://github.com/voxpupuli/puppet-zabbix/pull/150) ([rtizzy](https://github.com/rtizzy))
 - Allow agent\_serveractive value to be blank [\#147](https://github.com/voxpupuli/puppet-zabbix/pull/147) ([ericsysmin](https://github.com/ericsysmin))
 - allow serveractive to be optional [\#146](https://github.com/voxpupuli/puppet-zabbix/pull/146) ([ericsysmin](https://github.com/ericsysmin))
 - fixed typo for comment mysql [\#145](https://github.com/voxpupuli/puppet-zabbix/pull/145) ([ghost](https://github.com/ghost))
@@ -470,7 +560,7 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - Generalise the zabbix\_url [\#129](https://github.com/voxpupuli/puppet-zabbix/pull/129) ([DjxDeaf](https://github.com/DjxDeaf))
-- Added supporting new Zabbix params [\#128](https://github.com/voxpupuli/puppet-zabbix/pull/128) ([akostetskiy](https://github.com/akostetskiy))
+- Added supporting new Zabbix params [\#128](https://github.com/voxpupuli/puppet-zabbix/pull/128) ([akostetsky](https://github.com/akostetsky))
 - refactoring of repo.pp [\#126](https://github.com/voxpupuli/puppet-zabbix/pull/126) ([bastelfreak](https://github.com/bastelfreak))
 - Fping wrong path in debian [\#124](https://github.com/voxpupuli/puppet-zabbix/pull/124) ([Oyabi](https://github.com/Oyabi))
 - add support for CloudLinux [\#122](https://github.com/voxpupuli/puppet-zabbix/pull/122) ([bastelfreak](https://github.com/bastelfreak))
@@ -523,7 +613,7 @@ These should not affect the functionality of the module.
 - merge of hiera hashes from entire hierarchy [\#98](https://github.com/voxpupuli/puppet-zabbix/pull/98) ([szemlyanoy](https://github.com/szemlyanoy))
 - Added support to Amazon Linux with epel 6. [\#96](https://github.com/voxpupuli/puppet-zabbix/pull/96) ([Wprosdocimo](https://github.com/Wprosdocimo))
 - import templates and create hostgroup if missing [\#95](https://github.com/voxpupuli/puppet-zabbix/pull/95) ([1n](https://github.com/1n))
-- Added Support For Zapache monitoring script [\#94](https://github.com/voxpupuli/puppet-zabbix/pull/94) ([elricsfate](https://github.com/elricsfate))
+- Added Support For Zapache monitoring script [\#94](https://github.com/voxpupuli/puppet-zabbix/pull/94) ([rtizzy](https://github.com/rtizzy))
 
 ## [1.4.0](https://github.com/voxpupuli/puppet-zabbix/tree/1.4.0) (2015-05-18)
 
@@ -566,7 +656,7 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - better default parameter for userparameter [\#73](https://github.com/voxpupuli/puppet-zabbix/pull/73) ([sbaryakov](https://github.com/sbaryakov))
-- Fixed small error regarding manage\_resources and it's usage with classes [\#71](https://github.com/voxpupuli/puppet-zabbix/pull/71) ([elricsfate](https://github.com/elricsfate))
+- Fixed small error regarding manage\_resources and it's usage with classes [\#71](https://github.com/voxpupuli/puppet-zabbix/pull/71) ([rtizzy](https://github.com/rtizzy))
 - bugfix for vhosts in apache 2.4 [\#67](https://github.com/voxpupuli/puppet-zabbix/pull/67) ([ju5t](https://github.com/ju5t))
 - Update apt key to full 40characters [\#66](https://github.com/voxpupuli/puppet-zabbix/pull/66) ([exptom](https://github.com/exptom))
 - rename ListenIp =\> ListenIP [\#65](https://github.com/voxpupuli/puppet-zabbix/pull/65) ([sbaryakov](https://github.com/sbaryakov))
@@ -630,6 +720,7 @@ These should not affect the functionality of the module.
 - allow custom  owner and group for zabbix server config, [\#36](https://github.com/voxpupuli/puppet-zabbix/pull/36) ([f0](https://github.com/f0))
 - ZABBIX proxy and ZABBIX server service names are now customizable / Allow changing the path to the database schema files [\#35](https://github.com/voxpupuli/puppet-zabbix/pull/35) ([f0](https://github.com/f0))
 - remove hardcoded config file paths for server, proxy and agent [\#34](https://github.com/voxpupuli/puppet-zabbix/pull/34) ([f0](https://github.com/f0))
+- Update  apache\_ssl\_cipher  list [\#32](https://github.com/voxpupuli/puppet-zabbix/pull/32) ([karolisc](https://github.com/karolisc))
 
 ## [1.0.0](https://github.com/voxpupuli/puppet-zabbix/tree/1.0.0) (2015-01-02)
 
@@ -650,7 +741,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update  apache\_ssl\_cipher  list [\#32](https://github.com/voxpupuli/puppet-zabbix/pull/32) ([karolisc](https://github.com/karolisc))
 - Add support for debian sid \(just use wheezy package\) [\#30](https://github.com/voxpupuli/puppet-zabbix/pull/30) ([lucas42](https://github.com/lucas42))
 - Add support for low level discovery\(LLD\) scripts [\#27](https://github.com/voxpupuli/puppet-zabbix/pull/27) ([karolisc](https://github.com/karolisc))
 - Remove execute bit from .conf files [\#26](https://github.com/voxpupuli/puppet-zabbix/pull/26) ([karolisc](https://github.com/karolisc))
@@ -754,4 +844,4 @@ These should not affect the functionality of the module.
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

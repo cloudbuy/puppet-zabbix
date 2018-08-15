@@ -11,7 +11,7 @@ def location_for(place, fake_version = nil)
 end
 
 group :test do
-  gem 'puppetlabs_spec_helper', '~> 2.5.0',                         :require => false
+  gem 'puppetlabs_spec_helper', '~> 2.6',                           :require => false
   gem 'rspec-puppet', '~> 2.5',                                     :require => false
   gem 'rspec-puppet-facts',                                         :require => false
   gem 'rspec-puppet-utils',                                         :require => false
@@ -25,12 +25,13 @@ group :test do
   gem 'redcarpet',                                                  :require => false
   gem 'rubocop', '~> 0.49.1',                                       :require => false if RUBY_VERSION >= '2.3.0'
   gem 'rubocop-rspec', '~> 1.15.0',                                 :require => false if RUBY_VERSION >= '2.3.0'
-  gem 'mocha', '>= 1.2.1',                                          :require => false
+  gem 'mocha', '~> 1.4.0',                                          :require => false
   gem 'coveralls',                                                  :require => false
   gem 'simplecov-console',                                          :require => false
   gem 'rack', '~> 1.0',                                             :require => false if RUBY_VERSION < '2.2.2'
   gem 'parallel_tests',                                             :require => false
-  gem 'fakefs',                                                     :require => false
+  gem 'fakefs', '0.13.3',                                           :require => false if RUBY_VERSION < '2.3.0'
+  gem 'fakefs',                                                     :require => false if RUBY_VERSION >= '2.3.0'
 end
 
 group :development do
@@ -41,7 +42,7 @@ group :development do
 end
 
 group :system_tests do
-  gem 'winrm',                         :require => false
+  gem 'winrm',                              :require => false
   if beaker_version = ENV['BEAKER_VERSION']
     gem 'beaker', *location_for(beaker_version)
   else
@@ -52,16 +53,22 @@ group :system_tests do
   else
     gem 'beaker-rspec',  :require => false
   end
-  gem 'serverspec',                    :require => false
-  gem 'beaker-puppet_install_helper',  :require => false
-  gem 'beaker-module_install_helper',  :require => false
+  gem 'serverspec',                         :require => false
+  gem 'beaker-hostgenerator', '>= 1.1.10',  :require => false
+  gem 'beaker-docker',                      :require => false
+  gem 'beaker-puppet',                      :require => false
+  gem 'beaker-puppet_install_helper',       :require => false
+  gem 'beaker-module_install_helper',       :require => false
+  gem 'rbnacl', '>= 4',                     :require => false if RUBY_VERSION >= '2.2.6'
+  gem 'rbnacl-libsodium',                   :require => false if RUBY_VERSION >= '2.2.6'
+  gem 'bcrypt_pbkdf',                       :require => false
 end
 
 group :release do
-  gem 'github_changelog_generator',  :require => false if RUBY_VERSION >= '2.2.2'
+  gem 'github_changelog_generator',  :require => false, :git => 'https://github.com/skywinder/github-changelog-generator' if RUBY_VERSION >= '2.2.2'
   gem 'puppet-blacksmith',           :require => false
   gem 'voxpupuli-release',           :require => false, :git => 'https://github.com/voxpupuli/voxpupuli-release-gem'
-  gem 'puppet-strings', '~> 1.0',    :require => false
+  gem 'puppet-strings', '>= 1.0',    :require => false
 end
 
 

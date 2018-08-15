@@ -125,6 +125,9 @@
 # [*vmwarecachesize*]
 #   Size of vmware cache, in bytes.
 #
+# [*vmwaretimeout*]
+#   The maximum number of seconds vmware collector will wait for a response from VMware service.
+#
 # [*snmptrapperfile*]
 #   Temporary file used for passing data from snmp trap daemon to the server.
 #
@@ -330,6 +333,7 @@ class zabbix::server (
   $startvmwarecollectors            = $zabbix::params::server_startvmwarecollectors,
   $vmwarefrequency                  = $zabbix::params::server_vmwarefrequency,
   $vmwarecachesize                  = $zabbix::params::server_vmwarecachesize,
+  $vmwaretimeout                    = $zabbix::params::server_vmwaretimeout,
   $snmptrapperfile                  = $zabbix::params::server_snmptrapperfile,
   $startsnmptrapper                 = $zabbix::params::server_startsnmptrapper,
   $listenip                         = $zabbix::params::server_listenip,
@@ -568,10 +572,10 @@ class zabbix::server (
     }
     # zabbix-server 3.4 introduced IPC via a socket in /tmp
     # https://support.zabbix.com/browse/ZBX-12567
-    if versioncmp($zabbix_version, '3.3') > 1  {
+    if versioncmp($zabbix_version, '3.3') > 0  {
       selinux::module{'zabbix-server-ipc':
         ensure    => 'present',
-        source_te => 'puppet:///modules/zabbix/zabbix-server-ips.te',
+        source_te => 'puppet:///modules/zabbix/zabbix-server-ipc.te',
         before    => $dependency,
       }
     }
